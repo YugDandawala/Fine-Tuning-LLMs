@@ -3,12 +3,7 @@
 
 import torch
 from datasets import Dataset
-from transformers import (
-    AutoTokenizer,
-    AutoModelForCausalLM,
-    Trainer,
-    TrainingArguments
-)
+from transformers import AutoTokenizer,AutoModelForCausalLM,Trainer,TrainingArguments
 
 model_name = "meta-llama/Llama-3-7b-instruct"
 
@@ -39,12 +34,12 @@ def tokenize_and_format_labels(example):
 tokenized_dataset = dataset.map(tokenize_and_format_labels, batched=False)
 
 training_args = TrainingArguments(
-    output_dir="fine_tuned_model_no_collator",
+    output_dir="./fine_tuned_model",
     overwrite_output_dir=True,
     num_train_epochs=3,
     per_device_train_batch_size=2,
     gradient_accumulation_steps=4,
-    learning_rate=2e-5,
+    learning_rate=0.1,
     bf16=True,  # use bf16 if GPU supports it
     logging_steps=10,
     save_strategy="epoch",
@@ -57,13 +52,14 @@ trainer = Trainer(
     train_dataset=tokenized_dataset
 )
 
-print("Starting full fine-tuning (no data collator)...")
+print("Starting full fine-tuning...")
 trainer.train()
 
-trainer.save_model("fine_tuned_model_no_collator")
-tokenizer.save_pretrained("fine_tuned_model_no_collator")
+trainer.save_model("fine_tuned_model")
+tokenizer.save_pretrained("fine_tuned_model")
 print("Fine-tuning complete!")
 
+# Inference
 def generate(prompt, max_new_tokens=100):
     inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
     output = model.generate(**inputs, max_new_tokens=max_new_tokens)
