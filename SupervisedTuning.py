@@ -24,7 +24,7 @@ trainer=SFTTrainer(
     train_dataset=dataset['train'],
     args=TrainingArguments(
         # will save the model in this directory
-        output_dir="./tuned",
+        output_dir="./SuperVisedtuned",
         per_device_train_batch_size=2,
         num_train_epochs=5,
         learning_rate=0.1,
@@ -34,4 +34,4 @@ trainer=SFTTrainer(
 
 trainer.train()
 # Model name
-trainer.save_model("sft_model")
+trainer.save_model("SuperVisedtuned")
