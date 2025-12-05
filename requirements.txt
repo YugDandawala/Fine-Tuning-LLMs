@@ -22,9 +22,6 @@ torch>=2.1.0
 # Tokenizers backend
 sentencepiece>=0.1.99
 
-# Logging / visualization
-tensorboard>=2.12.0
-
 # Optional: for CSV datasets
 pandas>=2.1.0
 
