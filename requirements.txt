@@ -1,0 +1,35 @@
+# Transformers & tokenizers
+transformers>=4.35.0
+
+# PEFT (LoRA, Adapters, Prompt Tuning, IA³)
+peft>=0.5.0
+
+# RLHF / PPO / DPO training
+trl>=0.7.0
+
+# Dataset handling
+datasets>=2.14.0
+
+# Accelerate for multi-GPU / mixed precision training
+accelerate>=0.23.0
+
+# Optional: GPU support for large models (quantization)
+bitsandbytes>=0.41.0
+
+# PyTorch (1.15+ recommended for CUDA 12+)
+torch>=2.1.0
+
+# Tokenizers backend
+sentencepiece>=0.1.99
+
+# Logging / visualization
+tensorboard>=2.12.0
+
+# Optional: for CSV datasets
+pandas>=2.1.0
+
+# Optional: evaluation metrics
+scikit-learn>=1.3.0
+
+# Utilities
+tqdm>=4.65.0
