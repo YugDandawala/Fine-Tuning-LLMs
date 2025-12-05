@@ -45,7 +45,7 @@ def format_example(example):
     return f"### Instruction:\n{example['instruction']}\n\n### Response:\n{example['output']}"
 
 training_args = TrainingArguments(
-    output_dir="adapter_ia3_model",
+    output_dir="Prefix/P-2Tuning_model",
     per_device_train_batch_size=2,
     gradient_accumulation_steps=4,
     learning_rate=2e-5,
@@ -65,5 +65,5 @@ trainer = SFTTrainer(
 
 trainer.train()
 
-model.save_pretrained("adapter_ia3_model")
+model.save_pretrained("Prefix/P-2Tuning_model")
 print("Prefix/P-2 training complete!")
