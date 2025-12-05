@@ -37,7 +37,7 @@ def format_example(example):
     return f"### Instruction:\n{example['instruction']}\n\n### Response:\n{example['output']}"
 
 training_args = TrainingArguments(
-    output_dir="adapter_ia3_model",
+    output_dir="./adapter_ia3_model",
     per_device_train_batch_size=2,
     gradient_accumulation_steps=4,
     learning_rate=2e-5,
