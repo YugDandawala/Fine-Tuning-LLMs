@@ -6,6 +6,7 @@
 #     You want better generalization in the domain.
 import torch
 from datasets import Dataset
+from peft import LoraConfig,get_peft_model
 from transformers import (
     AutoTokenizer,
     AutoModelForCausalLM,
@@ -13,7 +14,6 @@ from transformers import (
     TrainingArguments,
     DataCollatorForLanguageModeling
 )
-from peft import LoraConfig, get_peft_model
 
 model_name = "meta-llama/Llama-3-7b-instruct"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
@@ -40,15 +40,15 @@ tokenized_dataset = text_dataset.map(tokenize_function, batched=True)
 
 data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
 
-pretrain_args = TrainingArguments(
-    output_dir="domain_model",
-    overwrite_output_dir=True,
-    learning_rate=2e-5,
-    num_train_epochs=1,
+pretrain_args=TrainingArguments(
+    output_dir="./domain_model",
+    overwrite_ouput_dir=True,
+    learning_rate=0.1,
+    num_train_epochs=10,
     per_device_train_batch_size=2,
     bf16=True,
     logging_steps=10,
-    save_strategy="epoch"
+    save_stratergy="epoch"
 )
 
 pretrain_trainer = Trainer(
@@ -74,6 +74,7 @@ model = get_peft_model(model, lora_config)
 print("LoRA PEFT applied. Trainable parameters:")
 model.print_trainable_parameters()
 
+# Inference
 def generate(prompt, max_new_tokens=100):
     inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
     output = model.generate(**inputs, max_new_tokens=max_new_tokens)
