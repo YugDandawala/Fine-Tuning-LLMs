@@ -1,3 +1,5 @@
+# Example of downloading LLM model locally into our system
+
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 
